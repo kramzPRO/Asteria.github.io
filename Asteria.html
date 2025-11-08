@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asteria Network</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+      height: 100vh;
+    }
+
+    .background {
+      background: url('https://cdn.discordapp.com/attachments/1114541195008417874/1436779990195900500/zqwp7dt07wp41.png?ex=6910d923&is=690f87a3&hm=e42f9306d2b7f2c2c8c2ef2a19f4050380c7ce6d76f19ddaa45b44119ccc6956&') no-repeat center center fixed;
+      background-size: cover;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    canvas#snow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    header {
+      background-color: rgba(26, 26, 29, 0.85);
+      padding: 15px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Logoyu orantılı ve düzgün göster */
+    header img {<a href="https://resimlink.com/tdDxWr9nKVJ" title="ResimLink - Resim Yükle"><img src="https://r.resimlink.com/tdDxWr9nKVJ.png" title="ResimLink - Resim Yükle" alt="ResimLink - Resim Yükle"></a>
+      height: 60px;
+      width: auto;
+      image-rendering: crisp-edges; /* Piksel tabanlı netlik için */
+      image-rendering: pixelated;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      color: #fff;
+      margin: 0;
+      letter-spacing: 2px;
+      flex-grow: 1;
+      text-align: center;
+    }
+
+    /* Discord logosu için üstte boş alanda yer ayarlaması */
+    .discord-link {https://discord.gg/BJeFgq4ytu
+      position: relative;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      transition: transform 0.3s;
+      margin-left: 20px;
+    }
+
+    .discord-link img {https://resimlink.com/O-5Ms0RKq
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .discord-link:hover {https://discord.gg/BJeFgq4ytu
+      transform: scale(1.1);
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(3, 250px);
+      gap: 20px;
+      justify-content: center;
+      padding: 50px 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .container .row2 {
+      grid-column: span 3;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .card {
+      background-color: rgba(30, 30, 34, 0.9);
+      border-radius: 10px;
+      width: 250px;
+      padding: 25px;
+      text-align: center;
+      position: relative;
+      transition: 0.3s;
+      box-shadow: 0 0 15px rgba(0,0,0,0.4);
+      backdrop-filter: blur(5px);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .discount {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #e63946;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    .card h2 {
+      margin-top: 15px;
+      font-size: 1.5rem;
+      color: #f1faee;
+    }
+
+    .price {
+      margin: 15px 0;
+      font-size: 1.4rem;
+      color: #a8dadc;
+    }
+
+    .buy-btn {
+      background: linear-gradient(135deg, #457b9d, #1d3557);
+      border: none;
+      padding: 10px 20px;
+      color: #fff;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .buy-btn:hover {
+      background: linear-gradient(135deg, #1d3557, #457b9d);
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(26, 26, 29, 0.9);
+      color: #aaa;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: repeat(2, 250px);
+      }
+      .container .row2 {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+      header img {
+        margin-bottom: 10px;
+      }
+      .container {
+        grid-template-columns: 1fr;
+      }
+      .container .row2 {
+        flex-direction: column;
+      }
+      .discord-link {
+        margin: 10px auto 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="background"></div>
+  <canvas id="snow"></canvas>
+
+  <header>
+    <img src="https://cdn.discordapp.com/attachments/1114541195008417874/1436780950864465972/asteria_logo_optimized.png" alt="Asteria Logo" />
+    <h1>Asteria Network</h1>
+    <a href="https://discord.gg/yourserverlink" target="_blank" class="discord-link" aria-label="Discord Sunucumuz">
+      <img src="/mnt/data/38f80cd1-94ff-452e-9caf-220d4e41ad57.png" alt="Discord Logo" />
+    </a>
+  </header>
+
+  <div class="container">
+    <!-- Üst satır: 3 VIP -->
+    <div class="card">
+      <div class="discount">%35 İNDİRİM</div>
+      <h2>SPONSOR</h2>
+      <div class="price">325 TL</div>
+      <a href="https://shopier.com/" class="buy-btn" target="_blank">Satın Al</a>
+    </div>
+
+    <div class="card">
+      <div class="discount">%35 İNDİRİM</div>
+      <h2>MVIP+</h2>
+      <div class="price">195 TL</div>
+      <a href="https://shopier.com/" class="buy-btn" target="_blank">Satın Al</a>
+    </div>
+
+    <div class="card">
+      <div class="discount">%35 İNDİRİM</div>
+      <h2>NVIP+</h2>
+      <div class="price">130 TL</div>
+      <a href="https://shopier.com/" class="buy-btn" target="_blank">Satın Al</a>
+    </div>
+
+    <!-- Alt satır: 2 VIP -->
+    <div class="row2">
+      <div class="card">
+        <div class="discount">%35 İNDİRİM</div>
+        <h2>VIP+</h2>
+        <div class="price">95 TL</div>
+        <a href="https://shopier.com/" class="buy-btn" target="_blank">Satın Al</a>
+      </div>
+
+      <div class="card">
+        <div class="discount">%35 İNDİRİM</div>
+        <h2>VIP</h2>
+        <div class="price">65 TL</div>
+        <a href="https://shopier.com/" class="buy-btn" target="_blank">Satın Al</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Asteria Network - Tüm hakları saklıdır.
+  </footer>
+
+  <script>
+    const canvas = document.getElementById('snow');
+    const ctx = canvas.getContext('2d');
+    let snowflakes = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function createSnowflake() {
+      const x = Math.random() * canvas.width;
+      const y = 0;
+      const size = Math.random() * 4 + 1;
+      const speed = Math.random() * 1 + 0.5;
+      snowflakes.push({ x, y, size, speed });
+    }
+
+    function drawSnowflakes() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+      ctx.beginPath();
+      for (const flake of snowflakes) {
+        ctx.moveTo(flake.x, flake.y);
+        ctx.arc(flake.x, flake.y, flake.size, 0, Math.PI * 2);
+      }
+      ctx.fill();
+      updateSnowflakes();
+    }
+
+    function updateSnowflakes() {
+      for (const flake of snowflakes) {
+        flake.y += flake.speed;
+        if (flake.y > canvas.height) {
+          flake.y = 0;
+          flake.x = Math.random() * canvas.width;
+        }
+      }
+    }
+
+    function loop() {
+      drawSnowflakes();
+      requestAnimationFrame(loop);
+    }
+
+    setInterval(createSnowflake, 100);
+    loop();
+  </script>
+
+</body>
+</html>
